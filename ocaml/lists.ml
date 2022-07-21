@@ -310,8 +310,9 @@ let group (lst : 'a list) (sizes : int list) : 'a list list list =
 	the solution using multiset equality
  *)
 let multiset_eq (xs : 'a list) (ys : 'a list) : bool = 
-	let count n = List.fold_left (fun acc x -> acc + if n = x then 1 else 0) 0
-	in xs |> List.for_all (fun x -> count x xs = count x ys)
+	let count n = List.fold_left (fun acc x -> acc + if n = x then 1 else 0) 0 in
+	xs |> List.for_all (fun x -> count x xs = count x ys) &&
+	ys |> List.for_all (fun y -> count y ys = count y xs)
 
 let (=$=) = multiset_eq
 
