@@ -248,9 +248,18 @@ let inorder (tree : 'a binary_tree) : 'a list =
 
 (* TODO *)
 
+
 (* 71. Dotstring representation of binary trees *)
+let tree_dotstring (str : string) : char binary_tree = 
 
-
+	let rec parse i = match str.[i] with
+		| '.' -> Empty, i+1
+		|  c  -> 
+			let lhs, j = parse (i+1) in
+			let rhs, k = parse (j+0) in
+			Node (c, lhs, rhs), k
+	
+	in let tree, _ = parse 0 in tree
 
 
 
@@ -450,3 +459,17 @@ let tests () =
 			= []
 	);
 
+
+	assert (
+		tree_dotstring "abd..e..c.fg..." 
+			= Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)),
+ 			        Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)))
+	);
+
+	assert (
+		tree_dotstring "." =  Empty
+	);
+
+	assert (
+		tree_dotstring "a.b.." = Node ('a', Empty, Node ('b', Empty, Empty)) 
+	);
