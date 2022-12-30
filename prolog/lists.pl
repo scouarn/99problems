@@ -128,7 +128,26 @@ dupli([X|Xs], [X,X|Ys]) :- dupli(Xs, Ys).
 
 
 % 1.15 Duplicate the elements of a list a given number of times.
-% TODO
+
+% List of N times the element X
+times(_, 0, []).
+times(X, N, [X|Xs]) :-
+    N > 0,
+    M is N-1,
+    times(X, M, Xs).
+
+% Same as append/3
+concat(Xs, [], Xs) :- !.
+concat([], Ys, Ys) :- !.
+concat([X|Xs], Ys, [X|Zs]) :-
+    concat(Xs, Ys, Zs).
+
+dupli([], _, []).
+
+dupli([X|Xs], N, Ys) :-
+    times(X, N, XXX),
+    dupli(Xs, N, Zs),
+    concat(XXX, Zs, Ys).
 
 
 % 1.16 Drop every N'th element from a list.
