@@ -63,3 +63,25 @@ table(Vars, Expr) :-
     write_res(Expr), nl,
     fail. % don't write the results
 
+
+% 3.04 (**) Gray code.
+
+distrib(_, [], []).
+distrib(C, [X|Xs], [Y|Ys]) :-
+    atom_concat(C, X, Y),
+    distrib(C, Xs, Ys).
+
+gray(1, ['0', '1']) :- !.
+gray(N, C) :-
+    M is N-1,
+    gray(M, C1),
+
+    distrib('0', C1, Left),
+
+    reverse(C1, Crev),
+    distrib('1', Crev, Right),
+
+    append(Left, Right, C).
+
+
+
