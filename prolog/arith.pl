@@ -49,19 +49,19 @@ prime_factors(N, Fs) :-
 
 % 2.03 (**) Determine the prime factors of a given positive integer (2).
 
-collapse([], []).
+rle([], []).
 
-collapse([X|Xs], [f(X,N)|Ys]) :-
-    collapse(Xs, [f(X,M)|Ys]),
+rle([X|Xs], [f(X,N)|Ys]) :-
+    rle(Xs, [f(X,M)|Ys]),
     N is M+1,
     !.
 
-collapse([X|Xs], [f(X,1)|Ys]) :-
-    collapse(Xs, Ys).
+rle([X|Xs], [f(X,1)|Ys]) :-
+    rle(Xs, Ys).
 
 prime_factors_mult(N, Fs) :-
     prime_factors(N, Xs),
-    collapse(Xs, Fs).
+    rle(Xs, Fs).
 
 
 % 2.04 (*) A list of prime numbers.
@@ -78,5 +78,3 @@ prime_range(Lo, Up, [Lo|Ps]) :-
 prime_range(Lo, Up, Ps) :-
     Lo1 is Lo + 1,
     prime_range(Lo1, Up, Ps).
-
-

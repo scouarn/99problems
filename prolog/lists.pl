@@ -3,6 +3,7 @@
 my_last(X, [X]).
 my_last(X, [_|T]) :- my_last(X, T).
 
+
 % 1.02 Find the last but one element of a list.
 my_last2(X, [X, _]).
 my_last2(X, [_|T]) :- my_last2(X, T).
@@ -13,6 +14,7 @@ element_at(X, [X|_], 1).
 element_at(X, [_|T], N) :- 
     N > 1, M is N - 1,
     element_at(X, T, M).
+
 
 % 1.04 Find the number of elements of a list.
 len([], 0).
@@ -102,7 +104,21 @@ appendn(X, N, L1, L2) :-
 
 
 % 1.13 Run-length encoding of a list (direct solution).
+rle_encode_direct([], []).
 
+% nth repeat
+rle_encode_direct([X|Xs], [rle(X,N)|Ys]) :-
+    rle_encode_direct(Xs, [rle(X,M)|Ys]),
+    N is M+1,
+    !.
+
+% First repeat
+rle_encode_direct([X|Xs], [rle(X,2)|Ys]) :-
+    rle_encode_direct(Xs, [X|Ys]), !.
+
+% Not a repeat
+rle_encode_direct([X|Xs], [X|Ys]) :-
+    rle_encode_direct(Xs, Ys).
 
 
 % 1.14 Duplicate the elements of a list. 
@@ -112,7 +128,7 @@ dupli([X|Xs], [X,X|Ys]) :- dupli(Xs, Ys).
 
 
 % 1.15 Duplicate the elements of a list a given number of times.
-
+% TODO
 
 
 % 1.16 Drop every N'th element from a list.
@@ -140,7 +156,7 @@ split([X|Xs], N, [X|Ys], Zs) :-
 
 
 % 1.18 Extract a slice from a list.
-
+% TODO
 
 
 % 1.19 Rotate a list N places to the left.
