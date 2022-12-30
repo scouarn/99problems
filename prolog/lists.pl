@@ -175,7 +175,24 @@ split([X|Xs], N, [X|Ys], Zs) :-
 
 
 % 1.18 Extract a slice from a list.
-% TODO
+% Indices n where I =< n =< K, starting at 1
+
+% If I = K = 1 then take the first one
+slice([X|_], I, I, [X]) :-
+    I =:= 1, !.
+
+% Else if I = 1 then add the first one and continue
+slice([X|Xs], I, K, [X|Ys]) :-
+    I =:= 1, !,
+    K2 is K-1,
+    slice(Xs, I, K2, Ys).
+
+% Else if I > 1 then ignore the first element and continue
+slice([_|Xs], I, K, Ys) :-
+    I > 1,
+    I1 is I-1,
+    K1 is K-1,
+    slice(Xs, I1, K1, Ys).
 
 
 % 1.19 Rotate a list N places to the left.
@@ -254,14 +271,18 @@ combination(N, [_|Xs], Ys) :-
 group3([], [], [], []).
 group3(Xs, E, F, G) :- fail. 
 
+% b)
+% TODO
 
 
 
 % 1.28 Sorting a list of lists according to length of sublists
 
 % a)
+% TODO
 
 % b)
+% TODO
 
 
 
